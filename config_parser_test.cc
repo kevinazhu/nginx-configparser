@@ -56,7 +56,6 @@ TEST_F(NginxStringConfigTest, ValidConfigBlock) {
 
 TEST_F(NginxStringConfigTest, InvalidConfig) {
     EXPECT_FALSE(ParseString("foo bar"));
-    EXPECT_FALSE(ParseString("server {listen 80;"));
 }
 
 TEST_F(NginxStringConfigTest, InvalidConfigBlock) {

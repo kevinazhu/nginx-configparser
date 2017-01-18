@@ -210,9 +210,14 @@ bool NginxConfigParser::Parse(std::istream* config_file, NginxConfig* config) {
       config_stack.pop();
       unmatched_brackets--;
     } else if (token_type == TOKEN_TYPE_EOF) {
-      if ((last_token_type != TOKEN_TYPE_STATEMENT_END &&
-          last_token_type != TOKEN_TYPE_END_BLOCK) || unmatched_brackets != 0) {
+      if (last_token_type != TOKEN_TYPE_STATEMENT_END &&
+          last_token_type != TOKEN_TYPE_END_BLOCK) {
         // Error.
+        break;
+      }
+      else if (unmatched_brackets != 0) {
+        // Error
+        printf ("Mismatched brackets\n");
         break;
       }
       return true;
@@ -226,6 +231,7 @@ bool NginxConfigParser::Parse(std::istream* config_file, NginxConfig* config) {
   printf ("Bad transition from %s to %s\n",
           TokenTypeAsString(last_token_type),
           TokenTypeAsString(token_type));
+
   return false;
 }
 
