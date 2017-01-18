@@ -56,6 +56,7 @@ TEST_F(NginxStringConfigTest, ValidConfigBlock) {
 
 TEST_F(NginxStringConfigTest, InvalidConfig) {
     EXPECT_FALSE(ParseString("foo bar"));
+    EXPECT_FALSE(ParseString("server {listen 80;"));
 }
 
 TEST_F(NginxStringConfigTest, InvalidConfigBlock) {
@@ -65,4 +66,11 @@ TEST_F(NginxStringConfigTest, InvalidConfigBlock) {
 
 TEST_F(NginxStringConfigTest, ValidConfigNested) {
 	EXPECT_TRUE(ParseString("server { listen {foo 80;}}"));
+}
+
+TEST(NginxConfigParserTest, LargeConfig) {
+  NginxConfigParser parser;
+  NginxConfig out_config;
+
+  EXPECT_TRUE(parser.Parse("large_config", &out_config));
 }
