@@ -218,7 +218,7 @@ bool NginxConfigParser::Parse(std::istream* config_file, NginxConfig* config) {
       else if (unmatched_brackets != 0) {
         // Error
         printf ("Mismatched brackets\n");
-        break;
+        return false;
       }
       return true;
     } else {
